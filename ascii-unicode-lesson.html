@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Representing Text: ASCII &amp; Unicode</title>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsvxEXojhE1dlVVvGgTUBY5gc4W3Ej_Klh1Sq9wFJFQDul0nfay44XCbRH-34P4Y59/exec";
+const ACTIVITY = "ASCII and Unicode";
+</script>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--code:#0f1420;--border:#2a3038;--green:#4ade80;--gd:#22c55e;--text:#e6edf3;--dim:#9aa4af;--red:#f87171;--blue:#60a5fa;--yellow:#facc15}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:780px;margin:0 auto;padding:22px 16px 80px}
+h1{font-size:1.6rem;margin:0 0 4px}
+h2{color:var(--green);border-bottom:1px solid var(--border);padding-bottom:6px;margin-top:34px;font-size:1.2rem}
+p,li{line-height:1.6;font-size:.97rem}
+.sub{color:var(--dim);margin:0}
+.box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0}
+td,th{border:1px solid var(--border);padding:6px 9px;text-align:left}
+th{color:var(--green)}
+code{background:#22293a;border-radius:4px;padding:1px 5px;font-family:ui-monospace,Menlo,monospace;font-size:.9em}
+.note{border-left:3px solid var(--blue);background:#101722;padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.92rem}
+.top{position:sticky;top:0;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--border);z-index:5;display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.pill{font-size:.8rem;padding:3px 10px;border-radius:99px;border:1px solid var(--border);color:var(--dim)}
+input[type=text]{background:#0d1117;border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 10px;font-size:1rem;font-family:ui-monospace,monospace}
+#student{width:200px;font-family:inherit}
+.tag{font-family:ui-monospace,monospace;font-size:.75rem;color:var(--green);letter-spacing:.06em}
+button{border:1px solid var(--border);background:#22293a;color:var(--text);border-radius:6px;padding:8px 14px;font-weight:600;cursor:pointer;font-size:.88rem;margin:8px 6px 0 0}
+button.go{background:var(--gd);color:#04150a;border:none}
+.fb{font-weight:600;margin-top:8px;font-size:.92rem}.ok{color:var(--green)}.no{color:var(--red)}
+.opt{display:block;width:100%;text-align:left;background:#0d1117;border:1px solid var(--border);color:var(--text);border-radius:6px;padding:9px 12px;margin:6px 0;cursor:pointer;font-size:.92rem}
+.opt.correct{border-color:var(--green);background:#0f2417;color:var(--green)}.opt.wrong{border-color:var(--red);background:#2a1414;color:var(--red)}
+.line{display:flex;gap:8px;align-items:center;background:var(--code);border:1px solid var(--border);border-radius:6px;padding:8px 10px;margin:6px 0;font-size:.85rem}
+.line span{flex:1}
+.line button{margin:0;padding:3px 9px}
+.submitbox{border:1px solid var(--gd);background:#0f2417}
+.mono{font-family:ui-monospace,Menlo,monospace}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="tag">💻 IT · DATA, BINARY &amp; REPRESENTATION</div>
+<h1>Representing Text: ASCII &amp; Unicode</h1>
+<p class="sub">How does a computer, which only stores numbers, store the letter A?</p>
+
+<div class="top">
+  <div>Name: <input type="text" id="student" placeholder="Enter your full name"></div>
+  <div><span class="pill">Done: <b id="cnt">0</b>/7</span></div>
+</div>
+
+<div class="box">Read each section, then complete the practice box right after it. Everything is checked instantly. Submit at the bottom when you finish, or when time is almost up.</div>
+
+<h2>Text Is Secretly Numbers</h2>
+<p>A <b>character encoding</b> is an agreed-upon table that matches every character (letters, digits, punctuation, even the space bar) with a number. The computer stores and sends the numbers; the encoding tells every device how to translate them back into text. As long as your friend's computer uses the same table, the message gets through.</p>
+
+<h2>ASCII: The Classic Code</h2>
+<p>In the 1960s, American engineers agreed on <b>ASCII</b> (American Standard Code for Information Interchange). The original version used 7 bits per character, enough for 128 characters. Here's a sample:</p>
+<table><tr><th>Character</th><th>Decimal</th></tr>
+<tr><td>(space)</td><td>32</td></tr><tr><td>0</td><td>48</td></tr><tr><td>9</td><td>57</td></tr>
+<tr><td>A</td><td>65</td></tr><tr><td>B</td><td>66</td></tr><tr><td>Z</td><td>90</td></tr>
+<tr><td>a</td><td>97</td></tr><tr><td>z</td><td>122</td></tr></table>
+<p>The table follows a tidy pattern: capital letters run 65–90 in order (A=65, B=66, C=67...), lowercase run 97–122, and digits run 48–57. A lowercase letter is always exactly 32 more than its capital.</p>
+
+<div class="box"><span class="tag">🔢 PRACTICE</span> <b>Find the code</b>
+<p>Capital A is 65, and capital letters count up in order (A, B, C, D...). What is the ASCII code for capital <b>D</b>?</p>
+<div id="mc-m1"></div></div>
+
+<div class="box"><span class="tag">🔤 PRACTICE</span> <b>Decode it</b>
+<p>Using A=65 and a=97 (letters numbered in order), what word do the codes <span class="mono">66 121 101</span> spell?</p>
+<div id="mc-m2"></div></div>
+
+<div class="box"><span class="tag">⌨️ TRY IT</span> <b>Decode a message</b>
+<p>Type the message that these ASCII codes spell (capital letters, no spaces between letters): <span class="mono">72 73 33</span></p>
+<input type="text" id="dec1" placeholder="your answer">
+<button class="go" onclick="checkDecode()">Check</button>
+<div class="fb" id="fb-dec1"></div></div>
+
+<div class="box"><span class="tag">🔡 TRY IT</span> <b>Encode a message</b>
+<p>Using the table above, type the ASCII codes (separated by spaces) for the message <b>OK</b>.</p>
+<input type="text" id="enc1" placeholder="e.g. 79 75">
+<button class="go" onclick="checkEncode()">Check</button>
+<div class="fb" id="fb-enc1"></div></div>
+
+<div class="note"><b>Reminder:</b> the character '7' is not the number 7. The digit character '7' has ASCII code 55, totally different from the binary number 7. Text and math live in different representations, which is why a program sometimes must convert digits into real numbers before doing arithmetic with them.</div>
+
+<h2>ASCII's Limits</h2>
+<p>ASCII was designed for English and 256 slots can't cover almost everyone else. Arabic, Hindi, Korean, Greek and hundreds of other scripts need their own letters, and modern writing needs symbols, notation, and emoji too.</p>
+<p>For decades, different countries patched the problem with their own incompatible 256-character tables. Code 233 might mean one letter in one country's table and a totally different letter in another's, so a file made on one computer could turn to gibberish on another.</p>
+
+<h2>Unicode: One Table for the Whole World</h2>
+<p><b>Unicode</b> solves this with a single giant table meant to include every character in every writing system. Today it assigns a number, called a <b>code point</b>, to more than 150,000 characters from over 160 scripts, plus symbols, accented letters, and yes, emoji.</p>
+<p>The most common way to store Unicode is <b>UTF-8</b>: common English characters take just 1 byte (matching ASCII exactly, so old ASCII files still work), while less common characters take 2, 3, or 4 bytes as needed.</p>
+
+<div class="box"><span class="tag">🌍 PRACTICE</span> <b>Pick the encoding</b>
+<p>A website must display English, Chinese, Arabic, and emoji on the same page. Which encoding should it use?</p>
+<div id="mc-m3"></div></div>
+
+<h2>Why Standards Matter</h2>
+<p>A character encoding only works if <b>both sides use the same one</b>. If a file is saved with one encoding and opened with another, the numbers get matched to the wrong characters and the text comes out garbled. Standards are simply agreements, like driving on the same side of the road: nothing in the wiring forces it, but everyone follows the same rule so devices around the world can talk to each other.</p>
+
+<div class="box" style="border-left:4px solid #38bdf8"><span class="tag" style="color:#38bdf8">🧩 PARSONS PROBLEM</span> <b>Arrange the Steps</b>
+<p>Put these steps in order to show how the letter J travels from your keyboard to a friend's screen.</p>
+<div id="parsons"></div>
+<button class="go" onclick="checkParsons()">Check Order</button><button onclick="resetParsons()">Reset</button>
+<div class="fb" id="fb-p1"></div></div>
+
+<div class="box"><span class="tag">⚖️ PRACTICE</span> <b>The trade-off</b>
+<p>What is the main trade-off of Unicode compared to ASCII?</p>
+<div id="mc-m4"></div></div>
+
+<h2>Key Takeaways</h2>
+<ul>
+<li>A <b>character encoding</b> is an agreed table matching characters to numbers.</li>
+<li><b>ASCII</b> encodes 128 characters: capitals start at 65 (A), lowercase at 97 (a), digits at 48 (0).</li>
+<li>ASCII fits English but can't hold the world's scripts, symbols, and emoji.</li>
+<li><b>Unicode</b> gives a unique code point to over 150,000 characters; <b>UTF-8</b> stores common characters in 1 byte and stays compatible with ASCII.</li>
+<li>Encodings only work when both sides use the same standard; mismatches produce garbled text.</li>
+</ul>
+
+<div class="box submitbox">
+  <b>Finished?</b> Make sure your name is entered at the top, then submit.<br>
+  <button class="go" id="subBtn" onclick="submitAll()">Submit to Teacher</button>
+  <div class="fb" id="subMsg"></div>
+</div>
+</div>
+
+<script>
+const results = {};
+function mark(id, ok){ results[id] = ok; document.getElementById("cnt").textContent = Object.values(results).filter(Boolean).length; }
+
+/* ---- Multiple choice ---- */
+const MC = [
+ {id:"m1", box:"mc-m1", o:["68","70","72","100"], a:0},
+ {id:"m2", box:"mc-m2", o:["Bye","Boy","Rye","Bee"], a:0},
+ {id:"m3", box:"mc-m3", o:["ASCII, since it's the oldest standard","Extended 8-bit ASCII, since it has 256 characters","Hexadecimal, since it can represent any number","Unicode, since it includes characters from virtually every writing system"], a:3},
+ {id:"m4", box:"mc-m4", o:["There is no trade-off; Unicode is simpler and supports more characters","Unicode is faster but supports fewer characters","Unicode only works on phones, while ASCII works everywhere","Unicode supports far more characters, but some characters need more bytes of storage"], a:3}
+];
+MC.forEach(m => {
+  const box = document.getElementById(m.box);
+  m.o.forEach((t,i) => {
+    const btn = document.createElement("button"); btn.className="opt"; btn.style.display="block";
+    btn.textContent = "ABCD"[i] + ".  " + t;
+    btn.onclick = () => {
+      if(m.done) return; m.done = true;
+      box.querySelectorAll(".opt")[m.a].classList.add("correct");
+      if(i!==m.a) btn.classList.add("wrong");
+      mark(m.id, i===m.a);
+    };
+    box.appendChild(btn);
+  });
+});
+
+/* ---- Decode / Encode practice ---- */
+function checkDecode(){
+  const v = document.getElementById("dec1").value.trim().toUpperCase();
+  const fb = document.getElementById("fb-dec1");
+  const ok = v === "HI!";
+  fb.className = "fb " + (ok?"ok":"no");
+  fb.textContent = ok ? "✓ Correct! 72=H, 73=I, 33=!" : "✗ Not yet. Look up each code in the table above (33 is punctuation, not a letter).";
+  mark("dec1", ok);
+}
+function checkEncode(){
+  const v = document.getElementById("enc1").value.trim().replace(/\s+/g," ");
+  const fb = document.getElementById("fb-enc1");
+  const ok = v === "79 75";
+  fb.className = "fb " + (ok?"ok":"no");
+  fb.textContent = ok ? "✓ Correct! O=79, K=75" : "✗ Not yet. Capital letters run 65-90 in order (A=65).";
+  mark("enc1", ok);
+}
+
+/* ---- Parsons ---- */
+const PL = [
+ "You press the J key on your keyboard",
+ "Your device looks up the agreed character code for J",
+ "The code travels across the network as binary numbers",
+ "Your friend's device receives the binary numbers",
+ "Using the same encoding standard, the device matches the code back to J and draws it on screen"
+];
+let order = [0,1,2,3,4];
+function shuffleStart(){ order = [2,0,4,1,3]; }
+shuffleStart();
+function drawParsons(){
+  const box = document.getElementById("parsons"); box.innerHTML = "";
+  order.forEach((idx,pos) => {
+    const d = document.createElement("div"); d.className="line";
+    const s = document.createElement("span"); s.textContent = PL[idx]; d.appendChild(s);
+    const up = document.createElement("button"); up.textContent="▲"; up.disabled = pos===0; up.onclick=()=>move(pos,-1);
+    const dn = document.createElement("button"); dn.textContent="▼"; dn.disabled = pos===order.length-1; dn.onclick=()=>move(pos,1);
+    d.appendChild(up); d.appendChild(dn); box.appendChild(d);
+  });
+}
+function move(pos,dir){ const t=order[pos]; order[pos]=order[pos+dir]; order[pos+dir]=t; document.getElementById("fb-p1").textContent=""; drawParsons(); }
+function resetParsons(){ shuffleStart(); document.getElementById("fb-p1").textContent=""; drawParsons(); }
+function checkParsons(){
+  const ok = order.join(",") === "0,1,2,3,4";
+  const fb = document.getElementById("fb-p1");
+  fb.className = "fb " + (ok?"ok":"no");
+  fb.textContent = ok ? "✓ Correct order!" : "✗ Not yet. Think about what has to happen before the code can travel, and before it can be drawn.";
+  mark("parsons", ok);
+}
+drawParsons();
+
+/* ---- Submit ---- */
+function submitAll(){
+  const name = document.getElementById("student").value.trim(), msg = document.getElementById("subMsg");
+  if(!name){ msg.className="fb no"; msg.textContent="Enter your name at the top of the page first."; window.scrollTo(0,0); return; }
+  const score = Object.values(results).filter(Boolean).length, total = 7;
+  document.getElementById("subBtn").disabled = true; msg.className="fb"; msg.textContent="Submitting…";
+  fetch(SCRIPT_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body: JSON.stringify({name, score, total, quiz: ACTIVITY})})
+  .then(() => { msg.className="fb ok"; msg.textContent = `✓ Submitted: ${name} scored ${score}/${total}. You can close this page.`; })
+  .catch(() => { document.getElementById("subBtn").disabled=false; msg.className="fb no"; msg.textContent="Could not submit (no internet). Try again."; });
+}
+</script>
+</body>
+</html>
