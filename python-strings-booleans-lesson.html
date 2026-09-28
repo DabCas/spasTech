@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strings and Booleans</title>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsvxEXojhE1dlVVvGgTUBY5gc4W3Ej_Klh1Sq9wFJFQDul0nfay44XCbRH-34P4Y59/exec";
+const ACTIVITY = "Strings and Booleans";
+</script>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--code:#0f1420;--border:#2a3038;--green:#4ade80;--gd:#22c55e;--text:#e6edf3;--dim:#9aa4af;--red:#f87171;--blue:#60a5fa;--yellow:#facc15;}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:780px;margin:0 auto;padding:22px 16px 80px}
+h1{font-size:1.6rem;margin:0 0 4px}
+h2{color:var(--green);border-bottom:1px solid var(--border);padding-bottom:6px;margin-top:36px;font-size:1.2rem}
+p,li{line-height:1.6;font-size:.97rem}
+.sub{color:var(--dim);margin:0}
+.box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:14px 0}
+pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:12px 14px;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem;line-height:1.5;margin:10px 0}
+code{background:#22293a;border-radius:4px;padding:1px 5px;font-family:ui-monospace,Menlo,monospace;font-size:.88em}
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0}
+td,th{border:1px solid var(--border);padding:6px 8px;text-align:left}
+th{color:var(--green)}
+.note{border-left:3px solid var(--blue);background:var(--card);padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.92rem}
+.err{border-left-color:var(--red)}
+.top{position:sticky;top:0;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--border);z-index:5;display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.pill{font-size:.8rem;padding:3px 10px;border-radius:99px;border:1px solid var(--border);color:var(--dim)}
+.pill.ok{color:var(--green);border-color:var(--gd)}.pill.bad{color:var(--red);border-color:var(--red)}
+input[type=text]{background:#0d1117;border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 10px;font-size:1rem;width:220px}
+.ch{border-left:4px solid var(--gd)}
+.tag{font-family:ui-monospace,monospace;font-size:.75rem;color:var(--green);letter-spacing:.06em}
+textarea{width:100%;min-height:130px;background:var(--code);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92rem;line-height:1.5;resize:vertical;tab-size:4}
+button{border:1px solid var(--border);background:#22293a;color:var(--text);border-radius:6px;padding:8px 14px;font-weight:600;cursor:pointer;font-size:.88rem;margin:8px 6px 0 0}
+button.go{background:var(--gd);color:#04150a;border:none}
+button.hint{border-color:var(--yellow);color:var(--yellow);background:transparent}
+.out{white-space:pre-wrap;background:#000;border-radius:6px;padding:8px 10px;font-family:ui-monospace,monospace;font-size:.85rem;margin-top:10px;min-height:20px;color:#cbd5e1}
+.fb{font-weight:600;margin-top:8px;font-size:.92rem}.ok{color:var(--green)}.no{color:var(--red)}
+.hintbox{display:none;color:var(--yellow);font-size:.88rem;margin-top:8px}
+.opt{display:block;width:100%;text-align:left;background:#0d1117;border:1px solid var(--border);color:var(--text);border-radius:6px;padding:9px 12px;margin:6px 0;cursor:pointer;font-family:ui-monospace,monospace;font-size:.9rem}
+.opt.correct{border-color:var(--green);background:#0f2417;color:var(--green)}.opt.wrong{border-color:var(--red);background:#2a1414;color:var(--red)}
+.line{display:flex;gap:8px;align-items:center;background:var(--code);border:1px solid var(--border);border-radius:6px;padding:6px 10px;margin:6px 0;font-family:ui-monospace,monospace;font-size:.88rem}
+.line span{flex:1;overflow-x:auto;white-space:nowrap}
+.line button{margin:0;padding:3px 9px}
+.submitbox{border:1px solid var(--gd);background:#0f2417}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Strings and Booleans</h1>
+<p class="sub">Intro to Python · Variables &amp; Data Types</p>
+
+<div class="top">
+  <div>Name: <input type="text" id="student" placeholder="Enter your full name"></div>
+  <div><span class="pill" id="engine">Python: loading…</span> <span class="pill">Done: <b id="cnt">0</b>/7</span></div>
+</div>
+
+<div class="box">Read each section, then <b>write real Python</b> in the code boxes and press <b>Run Tests</b>. Your work is checked automatically. When you finish (or time is almost up), press <b>Submit to Teacher</b> at the bottom. First load can take 10–20 seconds while Python starts.</div>
+
+<h2>Strings</h2>
+<p>A <b>string</b> is a sequence of characters (letters, digits, spaces, punctuation) surrounded by quotes. Single <code>'...'</code> or double <code>"..."</code> quotes both work.</p>
+<pre>first = "Ada"
+last = 'Lovelace'
+greeting = "Hello, world!"
+empty = ""      # an empty string is still a string</pre>
+
+<h2>String Operations</h2>
+<table><tr><th>Operation</th><th>Syntax</th><th>Example</th><th>Result</th></tr>
+<tr><td>Concatenation</td><td><code>+</code></td><td><code>"Hi " + "there"</code></td><td><code>"Hi there"</code></td></tr>
+<tr><td>Repetition</td><td><code>*</code></td><td><code>"ha" * 3</code></td><td><code>"hahaha"</code></td></tr>
+<tr><td>Length</td><td><code>len()</code></td><td><code>len("hello")</code></td><td><code>5</code></td></tr></table>
+<pre>name = "Python"
+print("Hello, " + name + "!")   # Hello, Python!
+print(name * 2)                 # PythonPython
+print(len(name))                # 6</pre>
+
+<div class="box ch"><span class="tag">🐍 PYTHON CHALLENGE</span> <b>String Operations</b>
+<p id="d-c4"></p><div id="w-c4"></div></div>
+
+<h2>f-Strings (Formatted String Literals)</h2>
+<p>f-strings let you embed variables directly inside a string using curly braces:</p>
+<pre>name = "Mia"
+age = 17
+print(f"My name is {name} and I am {age} years old.")
+# My name is Mia and I am 17 years old.</pre>
+<div class="note"><b>NOTE</b><br>f-strings start with the letter <code>f</code> right before the opening quote. Any expression inside <code>{}</code> gets evaluated and inserted into the string.</div>
+
+<div class="box" style="border-left:4px solid #38bdf8"><span class="tag" style="color:#38bdf8">🧩 PARSONS PROBLEM</span> <b>Arrange the Code</b>
+<p>Order these lines to build and print a greeting using an f-string.</p>
+<div id="parsons"></div>
+<button class="go" onclick="checkParsons()">Check Order</button><button onclick="resetParsons()">Reset</button>
+<div class="fb" id="fb-p1"></div></div>
+
+<div class="box ch"><span class="tag">🐍 PYTHON CHALLENGE</span> <b>Build a Greeting</b>
+<p id="d-c1"></p><div id="w-c1"></div></div>
+
+<h2>Booleans</h2>
+<p>A <b>boolean</b> is a value that is either <code>True</code> or <code>False</code> (capitalized in Python). Booleans come up constantly in conditions and comparisons. <i>(Watch the video link your teacher shared before continuing.)</i></p>
+<pre>is_raining = True
+has_umbrella = False
+print(is_raining)      # True
+print(has_umbrella)    # False</pre>
+
+<h2>Comparison Operators (produce booleans)</h2>
+<table><tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr>
+<tr><td><code>==</code></td><td>Equal to</td><td><code>5 == 5</code></td><td>True</td></tr>
+<tr><td><code>!=</code></td><td>Not equal</td><td><code>5 != 3</code></td><td>True</td></tr>
+<tr><td><code>&gt;</code></td><td>Greater than</td><td><code>7 &gt; 3</code></td><td>True</td></tr>
+<tr><td><code>&lt;</code></td><td>Less than</td><td><code>2 &lt; 1</code></td><td>False</td></tr>
+<tr><td><code>&gt;=</code></td><td>Greater or equal</td><td><code>5 &gt;= 5</code></td><td>True</td></tr>
+<tr><td><code>&lt;=</code></td><td>Less or equal</td><td><code>4 &lt;= 3</code></td><td>False</td></tr></table>
+<pre>score = 85
+passing = score &gt;= 70
+print(passing)          # True
+print(score == 100)     # False</pre>
+
+<h2>Boolean Operators</h2>
+<p>Combine booleans with <code>and</code>, <code>or</code>, and <code>not</code>:</p>
+<pre>x = 10
+print(x &gt; 5 and x &lt; 20)    # True  (both conditions are true)
+print(x &gt; 5 or x &gt; 100)    # True  (at least one is true)
+print(not x &gt; 5)           # False (reverses True to False)</pre>
+<div class="note err"><b>⚠ COMMON ERROR</b><br><b>= vs ==</b>: A single <code>=</code> assigns a value. A double <code>==</code> checks equality. Writing <code>if x = 5:</code> is a syntax error in Python. Always use <code>==</code> for comparisons.</div>
+
+<div class="box ch"><span class="tag">🐍 PYTHON CHALLENGE</span> <b>Boolean Comparisons</b>
+<p id="d-c2"></p><div id="w-c2"></div></div>
+
+<h2>Checking the Type with type()</h2>
+<p>The built-in <code>type()</code> function tells you what type a value is:</p>
+<pre>print(type(42))        # &lt;class 'int'&gt;
+print(type(3.14))      # &lt;class 'float'&gt;
+print(type("hello"))   # &lt;class 'str'&gt;
+print(type(True))      # &lt;class 'bool'&gt;</pre>
+<p>This is super handy when you are debugging and something behaves unexpectedly.</p>
+
+<div class="box ch"><span class="tag">🐍 PYTHON CHALLENGE</span> <b>Identify Types</b>
+<p id="d-c3"></p><div id="w-c3"></div></div>
+
+<h2>Quick Check</h2>
+<div id="mcq"></div>
+
+<div class="box submitbox">
+  <b>Finished?</b> Make sure your name is entered at the top, then submit.<br>
+  <button class="go" id="subBtn" onclick="submitAll()">Submit to Teacher</button>
+  <div class="fb" id="subMsg"></div>
+</div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const results = {};
+let py = null, pyFailed = false;
+
+/* ---------- Python engine (Pyodide) ---------- */
+(function(){
+  const s = document.createElement("script");
+  s.src = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+  s.onload = async () => {
+    try {
+      py = await loadPyodide();
+      py.runPython(`
+import io, contextlib, json
+def _run(code):
+    buf = io.StringIO(); ns = {}; err = ""
+    try:
+        with contextlib.redirect_stdout(buf):
+            exec(code, ns)
+    except BaseException as e:
+        err = type(e).__name__ + ": " + str(e)
+    simple = {k: v for k, v in ns.items() if not k.startswith("__") and isinstance(v, (str, int, float, bool))}
+    return json.dumps({"out": buf.getvalue(), "err": err, "ns": simple})
+`);
+      $("engine").textContent = "Python: ready"; $("engine").className = "pill ok";
+    } catch(e){ fail(); }
+  };
+  s.onerror = fail;
+  document.head.appendChild(s);
+  function fail(){ pyFailed = true; $("engine").textContent = "Python: failed to load"; $("engine").className = "pill bad"; }
+})();
+
+/* ---------- Coding challenges ---------- */
+const CH = [
+ {id:"c4", desc:'Create a variable word with the value "ha". Print word repeated 3 times on the first line, then print the length of the string "hello" on the second line.',
+  start:'word = "ha"\n# TODO: print word repeated 3 times, then the length of "hello"\n',
+  hint:'Use word * 3 inside print(), and len("hello") inside another print().',
+  exp:"hahaha\n5", need:(r,c)=>c.includes("*")&&c.includes("len(")},
+ {id:"c1", desc:'Create a variable name with the value "Alex" and a variable age with the value 16 (integer). Print a greeting on one line that reads: Hello, Alex! You are 16 years old.',
+  start:'name = "Alex"\nage = 16\n# TODO: print the greeting\n',
+  hint:'Try an f-string: print(f"Hello, {name}! You are {age} years old.")',
+  exp:"Hello, Alex! You are 16 years old.", need:(r,c)=>r.ns.name==="Alex"&&r.ns.age===16},
+ {id:"c2", desc:"Define x = 15. Print whether x is greater than 10 on the first line, then print whether x equals 20 on the second line. Both results should be boolean (True or False).",
+  start:"x = 15\n# TODO: print two comparisons\n",
+  hint:"print(x > 10) on line one, print(x == 20) on line two. Remember == checks equality.",
+  exp:"True\nFalse", need:(r,c)=>c.includes(">")&&c.includes("==")},
+ {id:"c3", desc:"Print the type of each of these three values on separate lines: 42, 3.14, and True. Use the type() function.",
+  start:"# TODO: print type(42), type(3.14), and type(True) on separate lines\n",
+  hint:"print(type(42)) on the first line, then the same idea for 3.14 and True.",
+  exp:"<class 'int'>\n<class 'float'>\n<class 'bool'>", need:(r,c)=>c.split("type(").length>=4}
+];
+const norm = s => s.replace(/\r/g,"").split("\n").map(l=>l.trimEnd()).join("\n").trim();
+
+CH.forEach(c => {
+  $("d-"+c.id).textContent = c.desc;
+  const w = $("w-"+c.id);
+  w.innerHTML = `<textarea id="ta-${c.id}" spellcheck="false"></textarea>
+   <button class="go" onclick="runCh('${c.id}')">Run Tests</button>
+   <button onclick="resetCh('${c.id}')">Reset Code</button>
+   <button class="hint" onclick="$('h-${c.id}').style.display='block'">Show Hint</button>
+   <div class="hintbox" id="h-${c.id}"></div>
+   <div class="out" id="o-${c.id}"></div><div class="fb" id="fb-${c.id}"></div>`;
+  $("ta-"+c.id).value = c.start;
+  $("h-"+c.id).textContent = "💡 " + c.hint;
+  $("ta-"+c.id).addEventListener("keydown", e => {
+    if(e.key === "Tab"){ e.preventDefault(); const t=e.target, p=t.selectionStart; t.value=t.value.slice(0,p)+"    "+t.value.slice(t.selectionEnd); t.selectionStart=t.selectionEnd=p+4; }
+  });
+});
+function resetCh(id){ $("ta-"+id).value = CH.find(c=>c.id===id).start; $("o-"+id).textContent=""; $("fb-"+id).textContent=""; }
+function mark(id, ok){ results[id] = ok; $("cnt").textContent = Object.values(results).filter(Boolean).length; }
+function runCh(id){
+  const c = CH.find(x=>x.id===id), fb = $("fb-"+id), out = $("o-"+id), code = $("ta-"+id).value;
+  if(!py){ fb.className="fb no"; fb.textContent = pyFailed ? "Python couldn't load. Check your internet connection and reload this file." : "Python is still starting… try again in a few seconds."; return; }
+  const r = JSON.parse(py.globals.get("_run")(code));
+  out.textContent = (r.out || "") + (r.err ? "\n" + r.err : "");
+  if(r.err){ fb.className="fb no"; fb.textContent="✗ Your code has an error. Read the message above."; mark(id,false); return; }
+  if(norm(r.out) !== norm(c.exp)){ fb.className="fb no"; fb.textContent="✗ Output doesn't match yet. Compare it to the instructions."; mark(id,false); return; }
+  if(!c.need(r, code)){ fb.className="fb no"; fb.textContent="✗ The output is right, but the instructions ask you to solve it a specific way. Re-read them."; mark(id,false); return; }
+  fb.className="fb ok"; fb.textContent="✓ All tests passed!"; mark(id,true);
+}
+
+/* ---------- Parsons ---------- */
+const PL = ['age = 14','name = "Jordan"','print(message)','message = f"Hello, {name}! You are {age} years old."'];
+let order = [0,1,2,3];
+function drawParsons(){
+  const box = $("parsons"); box.innerHTML = "";
+  order.forEach((idx,pos) => {
+    const d = document.createElement("div"); d.className="line";
+    const s = document.createElement("span"); s.textContent = PL[idx]; d.appendChild(s);
+    const up = document.createElement("button"); up.textContent="▲"; up.disabled = pos===0; up.onclick=()=>move(pos,-1);
+    const dn = document.createElement("button"); dn.textContent="▼"; dn.disabled = pos===order.length-1; dn.onclick=()=>move(pos,1);
+    d.appendChild(up); d.appendChild(dn); box.appendChild(d);
+  });
+}
+function move(pos,dir){ const t=order[pos]; order[pos]=order[pos+dir]; order[pos+dir]=t; $("fb-p1").textContent=""; drawParsons(); }
+function resetParsons(){ order=[0,1,2,3]; $("fb-p1").textContent=""; drawParsons(); }
+function checkParsons(){
+  const first2 = order.slice(0,2).sort().join(","), ok = first2==="0,1" && order[2]===3 && order[3]===2, fb=$("fb-p1");
+  fb.className = "fb " + (ok?"ok":"no");
+  fb.textContent = ok ? "✓ Correct order!" : "✗ Not yet. Variables must exist before the message uses them, and you print last.";
+  mark("p1", ok);
+}
+drawParsons();
+
+/* ---------- Quick check (multiple choice) ---------- */
+const MC = [
+ {id:"m1", q:"What is the output of print(type(True))?", o:["True","<class 'str'>","<class 'int'>","<class 'bool'>"], a:3},
+ {id:"m2", q:"What does 'Hi' * 3 produce?", o:["Hi 3","HiHiHi","3Hi","Error"], a:1}
+];
+MC.forEach(m => {
+  const b = document.createElement("div"); b.className="box";
+  const q = document.createElement("div"); q.innerHTML = '<span class="tag">✏️ QUICK CHECK</span><br>'; const qt=document.createElement("b"); qt.textContent=m.q; q.appendChild(qt); b.appendChild(q);
+  m.o.forEach((t,i) => {
+    const btn = document.createElement("button"); btn.className="opt"; btn.textContent = "ABCD"[i] + ".  " + t;
+    btn.onclick = () => {
+      if(m.done) return; m.done = true;
+      b.querySelectorAll(".opt")[m.a].classList.add("correct");
+      if(i!==m.a) btn.classList.add("wrong");
+      mark(m.id, i===m.a);
+    };
+    b.appendChild(btn);
+  });
+  $("mcq").appendChild(b);
+});
+
+/* ---------- Submit ---------- */
+function submitAll(){
+  const name = $("student").value.trim(), msg = $("subMsg");
+  if(!name){ msg.className="fb no"; msg.textContent="Enter your name at the top of the page first."; window.scrollTo(0,0); return; }
+  const score = Object.values(results).filter(Boolean).length, total = 7;
+  $("subBtn").disabled = true; msg.className="fb"; msg.textContent="Submitting…";
+  fetch(SCRIPT_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body: JSON.stringify({name, score, total, quiz: ACTIVITY})})
+  .then(() => { msg.className="fb ok"; msg.textContent = `✓ Submitted: ${name} scored ${score}/${total}. You can close this page.`; })
+  .catch(() => { $("subBtn").disabled=false; msg.className="fb no"; msg.textContent="Could not submit (no internet). Try again."; });
+}
+</script>
+</body>
+</html>

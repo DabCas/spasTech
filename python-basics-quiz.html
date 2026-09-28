@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python Basics Quiz</title>
+<style>
+/* ===== CONFIG =====
+   Paste your Google Apps Script Web App URL below (ends in /exec).
+   Leave as-is and the quiz still works locally, it just won't record scores. */
+</style>
+</head>
+<body>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwsvxEXojhE1dlVVvGgTUBY5gc4W3Ej_Klh1Sq9wFJFQDul0nfay44XCbRH-34P4Y59/exec";
+</script>
+<style>
+:root{
+  --bg:#0d1117; --card:#161b22; --border:#2a3038; --green:#4ade80; --green-dim:#22c55e;
+  --text:#e6edf3; --dim:#9aa4af; --red:#f87171;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,Segoe UI,Roboto,sans-serif;}
+.wrap{max-width:620px;margin:0 auto;padding:30px 18px 60px;}
+h1{font-size:1.4rem;margin-bottom:4px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;margin-top:18px;}
+.bar{height:5px;background:var(--border);border-radius:4px;margin:14px 0 22px;overflow:hidden;}
+.bar-fill{height:100%;background:var(--green-dim);width:20%;transition:width .2s;}
+.meta{display:flex;justify-content:space-between;color:var(--dim);font-size:.85rem;margin-bottom:2px;}
+.qtext{font-size:1.15rem;margin:14px 0 18px;}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#0d1117;
+  border:1px solid var(--border);color:var(--text);border-radius:8px;padding:12px 14px;
+  margin:8px 0;cursor:pointer;font-size:1rem;}
+.opt:hover{border-color:var(--green-dim);}
+.opt.selected{border-color:var(--green);background:#0f2417;}
+.letter{width:26px;height:26px;border-radius:50%;background:#22293a;display:flex;
+  align-items:center;justify-content:center;font-size:.85rem;color:var(--dim);flex-shrink:0;}
+.opt.selected .letter{background:var(--green-dim);color:#04150a;}
+.nav{display:flex;justify-content:space-between;margin-top:22px;}
+button{background:transparent;border:1px solid var(--border);color:var(--text);
+  border-radius:8px;padding:10px 20px;font-weight:600;cursor:pointer;font-size:.95rem;}
+button:disabled{opacity:.4;cursor:default;}
+.next-btn{background:var(--green-dim);border:none;color:#04150a;}
+input[type=text]{width:100%;background:#0d1117;border:1px solid var(--border);color:var(--text);
+  border-radius:8px;padding:12px 14px;font-size:1rem;margin:10px 0;}
+.err{color:var(--red);font-size:.85rem;display:none;margin-top:-4px;margin-bottom:8px;}
+.hidden{display:none;}
+.score{font-size:2rem;font-weight:700;color:var(--green);text-align:center;margin:10px 0;}
+.status{text-align:center;color:var(--dim);font-size:.9rem;}
+</style>
+
+<div class="wrap">
+  <h1>Python Basics — Quick Check</h1>
+
+  <div id="nameScreen" class="card">
+    <p style="margin-top:0;">Enter your name to begin.</p>
+    <input type="text" id="nameInput" placeholder="Full name">
+    <div class="err" id="nameErr">Enter your name first</div>
+    <button class="next-btn" onclick="startQuiz()">Start Quiz</button>
+  </div>
+
+  <div id="quizScreen" class="card hidden">
+    <div class="meta">
+      <span>Quiz</span>
+      <span id="qCounter">Question 1 of 5</span>
+    </div>
+    <div class="bar"><div class="bar-fill" id="barFill"></div></div>
+    <div class="qtext" id="qText"></div>
+    <div id="optsBox"></div>
+    <div class="err" id="ansErr">Select an answer first</div>
+    <div class="nav">
+      <button id="prevBtn" onclick="prevQ()">Previous</button>
+      <button class="next-btn" id="nextBtn" onclick="nextQ()">Next</button>
+    </div>
+  </div>
+
+  <div id="resultScreen" class="card hidden">
+    <p style="text-align:center;color:var(--dim);margin-top:0;">Nice work!</p>
+    <div class="score" id="scoreText"></div>
+    <p class="status" id="submitStatus">Submitting your score...</p>
+  </div>
+</div>
+
+<script>
+const questions = [
+  { q: "Which of the following is a valid Python variable name?",
+    opts: ["2fast", "my-score", "my_score", "class"], correct: 2 },
+  { q: "What is the result of 10 / 4 in Python?",
+    opts: ["2.5", "2", "2.0", "3"], correct: 0 },
+  { q: "What does 17 % 5 evaluate to?",
+    opts: ["3", "2", "3.4", "1"], correct: 1 },
+  { q: "After running x = 5 followed by x = x + 1, what is the value of x?",
+    opts: ["6", "5", "x + 1", "Error"], correct: 0 },
+  { q: "What is the result of 2 ** 3 in Python?",
+    opts: ["6", "8", "9", "5"], correct: 1 }
+];
+
+let studentName = "";
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+
+function startQuiz(){
+  const val = document.getElementById("nameInput").value.trim();
+  if(!val){
+    document.getElementById("nameErr").style.display = "block";
+    return;
+  }
+  studentName = val;
+  document.getElementById("nameScreen").classList.add("hidden");
+  document.getElementById("quizScreen").classList.remove("hidden");
+  renderQ();
+}
+
+function renderQ(){
+  const item = questions[current];
+  document.getElementById("qCounter").textContent = `Question ${current+1} of ${questions.length}`;
+  document.getElementById("barFill").style.width = `${((current+1)/questions.length)*100}%`;
+  document.getElementById("qText").textContent = item.q;
+  document.getElementById("ansErr").style.display = "none";
+  const box = document.getElementById("optsBox");
+  box.innerHTML = "";
+  const letters = ["A","B","C","D"];
+  item.opts.forEach((opt, idx) => {
+    const div = document.createElement("div");
+    div.className = "opt" + (answers[current] === idx ? " selected" : "");
+    div.innerHTML = `<span class="letter">${letters[idx]}</span><span>${opt}</span>`;
+    div.onclick = () => { answers[current] = idx; renderQ(); };
+    box.appendChild(div);
+  });
+  document.getElementById("prevBtn").disabled = current === 0;
+  document.getElementById("nextBtn").textContent = current === questions.length - 1 ? "Submit Quiz" : "Next";
+}
+
+function prevQ(){
+  if(current > 0){ current--; renderQ(); }
+}
+
+function nextQ(){
+  if(answers[current] === null){
+    document.getElementById("ansErr").style.display = "block";
+    return;
+  }
+  if(current < questions.length - 1){
+    current++; renderQ();
+  } else {
+    finishQuiz();
+  }
+}
+
+function finishQuiz(){
+  let score = 0;
+  questions.forEach((q, i) => { if(answers[i] === q.correct) score++; });
+  document.getElementById("quizScreen").classList.add("hidden");
+  document.getElementById("resultScreen").classList.remove("hidden");
+  document.getElementById("scoreText").textContent = `${studentName}: ${score} / ${questions.length}`;
+
+  const statusEl = document.getElementById("submitStatus");
+  if(!SCRIPT_URL || SCRIPT_URL.indexOf("PASTE_YOUR") === 0){
+    statusEl.textContent = "Score not recorded (teacher hasn't connected the sheet yet).";
+    return;
+  }
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify({ name: studentName, score: score, total: questions.length })
+  }).then(() => {
+    statusEl.textContent = "Score submitted. You're done!";
+  }).catch(() => {
+    statusEl.textContent = "Could not submit score (no internet connection).";
+  });
+}
+</script>
+</body>
+</html>
