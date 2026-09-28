@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bump &amp; Turn Explorer</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--code:#0f1420;--border:#2a3038;--green:#4ade80;--text:#e6edf3;--dim:#9aa4af;--blue:#60a5fa;--yellow:#facc15;--red:#f87171}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:820px;margin:0 auto;padding:22px 16px 70px}
+h1{font-size:1.7rem;margin:0 0 4px}
+h2{font-size:1.2rem;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+p,li{line-height:1.6;font-size:.98rem}
+.sub{color:var(--dim);margin:0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:18px 0}
+.num{background:var(--green);color:#04150a;width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.plan{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.plan div{flex:1;min-width:120px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:.85rem;color:var(--dim)}
+.plan b{color:var(--green);display:block}
+.note{border-left:3px solid var(--blue);background:#101722;padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.92rem}
+.warn{border-left-color:var(--yellow)}
+.panels{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.panels figure{margin:0;flex:1;min-width:140px;background:var(--code);border:1px solid var(--border);border-radius:8px;padding:6px;text-align:center}
+.panels figcaption{font-size:.8rem;color:var(--dim);margin-top:4px}
+.panels svg{width:100%;height:auto}
+.prog{background:var(--code);border:1px solid var(--border);border-radius:10px;padding:12px;margin:10px 0;overflow-x:auto}
+.b{display:block;padding:7px 12px;border-radius:6px;margin:3px 0;font-size:.9rem;font-weight:600;color:#111;width:max-content;max-width:100%}
+.ev{background:#f2c230}.dr{background:#4c97ff;color:#fff}.vr{background:#ef6c3a;color:#fff}.lk{background:#9966ff;color:#fff}
+.b i{background:#fff;color:#111;border-radius:10px;padding:0 8px;font-style:normal;margin:0 2px}
+.rep{background:#29b6d6;color:#04202a;border-radius:12px;padding:1px 9px;margin:0 3px;font-weight:700}
+.c{background:#f59e0b;border-radius:6px;padding:0 0 14px 14px;margin:3px 0;width:max-content;max-width:100%}
+.c>.h{padding:7px 12px 7px 0;font-weight:700;color:#111;font-size:.9rem}
+.c>.in{background:var(--code);padding:4px 8px}
+.new{outline:3px solid var(--green);outline-offset:1px}
+.tag{font-size:.72rem;color:var(--green);letter-spacing:.06em;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0}
+td,th{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{color:var(--green)}
+code{background:#22293a;border-radius:4px;padding:1px 5px;font-family:ui-monospace,Menlo,monospace;font-size:.88em}
+label{display:block;padding:5px 0;font-size:.95rem}
+input[type=checkbox]{width:18px;height:18px;margin-right:8px;vertical-align:middle}
+.lvl{border-left:4px solid var(--yellow)}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<g id="bot"><rect x="0" y="-14" width="34" height="28" rx="4" fill="#4c97ff"/><rect x="34" y="-6" width="10" height="12" rx="2" fill="#f2c230"/><rect x="5" y="-19" width="14" height="5" fill="#9aa4af"/><rect x="5" y="14" width="14" height="5" fill="#9aa4af"/></g>
+<marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#4ade80"/></marker>
+</defs></svg>
+
+<div class="wrap">
+<div class="tag">🤖 VEX ROBOTICS · BUMP SWITCH</div>
+<h1>Bump &amp; Turn Explorer</h1>
+<p class="sub">Mission: program your robot to explore a space like a robot vacuum, without getting stuck on walls.</p>
+
+<div class="plan">
+<div><b>5 min</b>Step 1: Check robot</div>
+<div><b>5 min</b>Step 2: Predict</div>
+<div><b>15 min</b>Step 3: Program</div>
+<div><b>10 min</b>Step 4: Test &amp; fix</div>
+<div><b>5 min</b>Step 5: Challenge</div>
+</div>
+
+<div class="note"><b>Last time</b> the bump switch was a <b>button</b>: each press added 10 to your drive velocity. <b>Today</b> it is a <b>sensor</b> on the front of the robot. It tells the robot "I just hit something!"</div>
+
+<div class="card">
+<h2><span class="num">1</span> Check your robot</h2>
+<svg viewBox="0 0 330 150" style="width:100%;max-width:420px;background:var(--code);border:1px solid var(--border);border-radius:8px">
+<g transform="translate(70,75) scale(2.2)"><use href="#bot"/></g>
+<line x1="270" y1="75" x2="215" y2="75" stroke="#4ade80" stroke-width="3" marker-end="url(#ah)"/>
+<text x="200" y="30" fill="#f2c230" font-size="13" text-anchor="middle">Bump switch</text>
+<line x1="200" y1="36" x2="178" y2="68" stroke="#f2c230" stroke-width="2"/>
+<text x="285" y="72" fill="#4ade80" font-size="12">FRONT</text>
+<text x="20" y="140" fill="#9aa4af" font-size="12">Top view of the robot</text>
+</svg>
+<label><input type="checkbox"> The bump switch is mounted on the <b>front</b> and sticks out past everything else.</label>
+<label><input type="checkbox"> The switch is plugged into a port. Write it here: ______ (you need it in your program).</label>
+<label><input type="checkbox"> Press the switch by hand. It clicks and springs back.</label>
+<label><input type="checkbox"> Your test area has a wall or a heavy box to bump into.</label>
+</div>
+
+<div class="card">
+<h2><span class="num">2</span> Predict what will happen</h2>
+<p>Your program will make the robot do these 4 things, over and over:</p>
+<div class="panels">
+<figure><svg viewBox="0 0 160 120"><rect x="4" y="4" width="152" height="112" fill="none" stroke="#2a3038" stroke-width="2"/><rect x="150" y="4" width="6" height="112" fill="#f87171"/><g transform="translate(14,60)"><use href="#bot"/></g><line x1="62" y1="60" x2="122" y2="60" stroke="#4ade80" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#ah)"/></svg><figcaption><b>1</b> Drive forward</figcaption></figure>
+<figure><svg viewBox="0 0 160 120"><rect x="4" y="4" width="152" height="112" fill="none" stroke="#2a3038" stroke-width="2"/><rect x="150" y="4" width="6" height="112" fill="#f87171"/><g transform="translate(105,60)"><use href="#bot"/></g><text x="130" y="30" font-size="22">💥</text></svg><figcaption><b>2</b> Switch hits the wall</figcaption></figure>
+<figure><svg viewBox="0 0 160 120"><rect x="4" y="4" width="152" height="112" fill="none" stroke="#2a3038" stroke-width="2"/><rect x="150" y="4" width="6" height="112" fill="#f87171"/><g transform="translate(70,60)"><use href="#bot"/></g><line x1="64" y1="98" x2="20" y2="98" stroke="#4ade80" stroke-width="3" marker-end="url(#ah)"/></svg><figcaption><b>3</b> Back up a little</figcaption></figure>
+<figure><svg viewBox="0 0 160 120"><rect x="4" y="4" width="152" height="112" fill="none" stroke="#2a3038" stroke-width="2"/><rect x="150" y="4" width="6" height="112" fill="#f87171"/><g transform="translate(84,50) rotate(90) translate(-17,0)"><use href="#bot"/></g><text x="112" y="66" font-size="20" fill="#4ade80">↻ 90°</text></svg><figcaption><b>4</b> Turn right 90°, then repeat</figcaption></figure>
+</div>
+<p><b>Write your prediction:</b> After the robot turns, which way will it drive? What will happen when it hits the next wall? ______________________________</p>
+</div>
+
+<div class="card">
+<h2><span class="num">3</span> Build the program</h2>
+<p>Open VEXcode Blocks. Build it in three parts. The block with the <span style="color:var(--green);font-weight:700">green outline</span> is the new one in that part.</p>
+
+<p><b>Part A: Start slowly</b> (you used this block last time)</p>
+<div class="prog">
+<div class="b ev">when started</div>
+<div class="b dr new">set drive velocity to <i>50</i> %</div>
+</div>
+
+<p><b>Part B: Drive until the bump</b></p>
+<div class="prog">
+<div class="b ev">when started</div>
+<div class="b dr">set drive velocity to <i>50</i> %</div>
+<div class="c new"><div class="h">forever</div><div class="in">
+<div class="b dr new">drive <i>forward</i></div>
+<div class="b" style="background:#f59e0b">wait until <span class="rep">BumperA pressed?</span></div>
+</div></div>
+</div>
+<p><i>"wait until" makes the robot keep driving until the bump switch is pressed.</i></p>
+
+<p><b>Part C: React to the bump</b></p>
+<div class="prog">
+<div class="b ev">when started</div>
+<div class="b dr">set drive velocity to <i>50</i> %</div>
+<div class="c"><div class="h">forever</div><div class="in">
+<div class="b dr">drive <i>forward</i></div>
+<div class="b" style="background:#f59e0b">wait until <span class="rep">BumperA pressed?</span></div>
+<div class="b dr new">stop driving</div>
+<div class="b dr new">drive <i>reverse</i> for <i>150</i> <i>mm</i></div>
+<div class="b dr new">turn <i>right</i> for <i>90</i> <i>degrees</i></div>
+</div></div>
+</div>
+<div class="note warn"><b>Heads up:</b> the pictures are drawn to look like VEXcode blocks. Your block names might be a little different (for example your bumper may have another name or port). Look for the blocks with the same words and use your own bumper.</div>
+<div class="note"><b>Why "forever"?</b> Everything inside it repeats again and again, so the robot keeps exploring.</div>
+</div>
+
+<div class="card">
+<h2><span class="num">4</span> Test it and fix it</h2>
+<p>Download the program to your robot and run it. Record what you see:</p>
+<table>
+<tr><th>Test</th><th>What should happen</th><th>What happened?</th></tr>
+<tr><td>Start facing a wall</td><td>Drives, bumps, backs up, turns</td><td></td></tr>
+<tr><td>Start in a corner</td><td>Bounces around, does not get stuck for long</td><td></td></tr>
+<tr><td>Change velocity from 50 to 80</td><td>Same moves, but faster</td><td></td></tr>
+</table>
+<p><b>Something wrong? Try these fixes:</b></p>
+<table>
+<tr><th>Problem</th><th>Try this</th></tr>
+<tr><td>Robot never stops at the wall</td><td>Check the bumper port matches the port in your block. Make sure the switch hits the wall <i>first</i>.</td></tr>
+<tr><td>Robot drives past the wall</td><td>Lower the velocity, and check the switch sticks out at the front.</td></tr>
+<tr><td>Robot turns the wrong amount</td><td>Change the degrees a little (try 80 or 100) and test again.</td></tr>
+<tr><td>Robot gets stuck in a corner</td><td>Make "reverse" longer (try 250 mm) so it has room to turn.</td></tr>
+</table>
+</div>
+
+<div class="card lvl">
+<h2><span class="num">5</span> Challenge: Faster every bump!</h2>
+<p><b>Level 2:</b> Use your idea from last time. Each bump makes the robot <b>10 % faster</b>. You need a variable called <code>speed</code>.</p>
+<div class="prog">
+<div class="b ev">when started</div>
+<div class="b vr">set <i>speed</i> to <i>30</i></div>
+<div class="c"><div class="h">forever</div><div class="in">
+<div class="b dr">set drive velocity to <i>speed</i> %</div>
+<div class="b dr">drive <i>forward</i></div>
+<div class="b" style="background:#f59e0b">wait until <span class="rep">BumperA pressed?</span></div>
+<div class="b dr">stop driving</div>
+<div class="b dr">drive <i>reverse</i> for <i>150</i> <i>mm</i></div>
+<div class="b dr">turn <i>right</i> for <i>90</i> <i>degrees</i></div>
+<div class="b vr new">change <i>speed</i> by <i>10</i></div>
+</div></div>
+</div>
+<p><b>Think:</b> What happens after many bumps? Is the robot still safe at that speed? ______________________</p>
+<p><b>Level 3:</b> Replace <b>forever</b> with <b>repeat 5</b> so the robot stops on its own after 5 bumps.</p>
+<p><b>Level 4:</b> Use a <b>print</b> block to show the speed on the Brain screen after every bump.</p>
+</div>
+
+<div class="card">
+<h2>✅ Show your teacher</h2>
+<label><input type="checkbox"> My robot bumps, backs up, and turns.</label>
+<label><input type="checkbox"> I tested it in a corner.</label>
+<label><input type="checkbox"> I fixed at least one problem and can explain what I changed.</label>
+<label><input type="checkbox"> I tried Level 2 (or higher).</label>
+<p><b>Exit question:</b> What is the difference between using the bump switch as a <i>button</i> (last time) and as a <i>sensor</i> (today)?<br>______________________________________________</p>
+</div>
+</div>
+</body>
+</html>
