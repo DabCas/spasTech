@@ -149,24 +149,22 @@ input[type=checkbox]{width:18px;height:18px;margin-right:8px;vertical-align:midd
 </div>
 
 <div class="card lvl">
-<h2><span class="num">5</span> Challenge: Faster every bump!</h2>
-<p><b>Level 2:</b> Use your idea from last time. Each bump makes the robot <b>10 % faster</b>. You need a variable called <code>speed</code>.</p>
+<h2><span class="num">5</span> Challenge: Level Up!</h2>
+<p><b>Level 2: Change the turn.</b> Change <code>right</code> to <code>left</code>, or change <code>90</code> to <code>45</code> degrees. Predict first: how will the robot's path change? Then test it.</p>
+<p><b>Level 3: Stop after 5 bumps.</b> Replace <b>forever</b> with <b>repeat 5</b>. What does the robot do after the 5th bump?</p>
+<p><b>Level 4: Say "Ouch!"</b> Add a <b>print</b> block so the Brain screen shows a message every time the robot bumps:</p>
 <div class="prog">
 <div class="b ev">when started</div>
-<div class="b vr">set <i>speed</i> to <i>30</i></div>
+<div class="b dr">set drive velocity to <i>50</i> %</div>
 <div class="c"><div class="h">forever</div><div class="in">
-<div class="b dr">set drive velocity to <i>speed</i> %</div>
 <div class="b dr">drive <i>forward</i></div>
 <div class="b" style="background:#f59e0b">wait until <span class="rep">BumperA pressed?</span></div>
 <div class="b dr">stop driving</div>
+<div class="b lk new">print <i>Ouch!</i> on Brain</div>
 <div class="b dr">drive <i>reverse</i> for <i>150</i> <i>mm</i></div>
 <div class="b dr">turn <i>right</i> for <i>90</i> <i>degrees</i></div>
-<div class="b vr new">change <i>speed</i> by <i>10</i></div>
 </div></div>
 </div>
-<p><b>Think:</b> What happens after many bumps? Is the robot still safe at that speed? ______________________</p>
-<p><b>Level 3:</b> Replace <b>forever</b> with <b>repeat 5</b> so the robot stops on its own after 5 bumps.</p>
-<p><b>Level 4:</b> Use a <b>print</b> block to show the speed on the Brain screen after every bump.</p>
 </div>
 
 <div class="card">
