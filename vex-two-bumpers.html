@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two Bumpers, Smarter Turns</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--code:#0f1420;--border:#2a3038;--green:#4ade80;--text:#e6edf3;--dim:#9aa4af;--blue:#60a5fa;--yellow:#facc15;--red:#f87171}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,sans-serif}
+.wrap{max-width:820px;margin:0 auto;padding:22px 16px 70px}
+h1{font-size:1.7rem;margin:0 0 4px}
+h2{font-size:1.2rem;margin:0 0 8px;display:flex;align-items:center;gap:10px}
+p,li{line-height:1.6;font-size:.98rem}
+.sub{color:var(--dim);margin:0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:18px 0}
+.num{background:var(--green);color:#04150a;width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.plan{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.plan div{flex:1;min-width:120px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:.85rem;color:var(--dim)}
+.plan b{color:var(--green);display:block}
+.note{border-left:3px solid var(--blue);background:#101722;padding:10px 14px;border-radius:0 8px 8px 0;margin:12px 0;font-size:.92rem}
+.warn{border-left-color:var(--yellow)}
+.prog{background:var(--code);border:1px solid var(--border);border-radius:10px;padding:12px;margin:10px 0;overflow-x:auto}
+.b{display:block;padding:7px 12px;border-radius:6px;margin:3px 0;font-size:.9rem;font-weight:600;color:#111;width:max-content;max-width:100%}
+.ev{background:#f2c230}.dr{background:#4c97ff;color:#fff}.se{background:#f59e0b}
+.b i{background:#fff;color:#111;border-radius:10px;padding:0 8px;font-style:normal;margin:0 2px}
+.c{background:#f59e0b;border-radius:6px;padding:0 0 14px 14px;margin:3px 0;width:max-content;max-width:100%}
+.c>.h{padding:7px 12px 7px 0;font-weight:700;color:#111;font-size:.9rem}
+.c>.in{background:var(--code);padding:4px 8px}
+.ie{background:#c2410c;border-radius:6px;padding:0 0 4px 14px;margin:3px 0;width:max-content;max-width:100%}
+.ie>.h{padding:7px 12px 7px 0;font-weight:700;color:#fff;font-size:.9rem}
+.ie>.in{background:var(--code);padding:4px 8px;margin-bottom:2px}
+.ie>.eh{padding:6px 12px 6px 0;font-weight:700;color:#fff;font-size:.9rem;margin-left:-14px}
+.new{outline:3px solid var(--green);outline-offset:1px}
+.tag{font-size:.72rem;color:var(--green);letter-spacing:.06em;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:10px 0}
+td,th{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}
+th{color:var(--green)}
+code{background:#22293a;border-radius:4px;padding:1px 5px;font-family:ui-monospace,Menlo,monospace;font-size:.88em}
+label{display:block;padding:5px 0;font-size:.95rem}
+input[type=checkbox]{width:18px;height:18px;margin-right:8px;vertical-align:middle}
+.lvl{border-left:4px solid var(--yellow)}
+figure{margin:0}
+figcaption{font-size:.82rem;color:var(--dim);text-align:center;margin-top:6px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#4ade80"/></marker>
+</defs></svg>
+
+<div class="wrap">
+<div class="tag">🤖 VEX ROBOTICS · SENSORS</div>
+<h1>Two Bumpers, Smarter Turns</h1>
+<p class="sub">Last time, one bump switch always made the robot turn the same way. Today it gets a second bumper — so it can turn <i>away</i> from whichever side got hit.</p>
+
+<div class="plan">
+<div><b>10 min</b>Step 1: Mount it</div>
+<div><b>5 min</b>Step 2: Predict</div>
+<div><b>15 min</b>Step 3: Program</div>
+<div><b>10 min</b>Step 4: Test &amp; fix</div>
+</div>
+
+<div class="note"><b>New idea: if / else.</b> Before, your robot only knew "a bump happened." Now it needs to know <i>which</i> bumper fired, and choose a different action for each one. That choosing is called a <b>branch</b> — in code it's an <code>if / else</code> block: "if this happened, do A — otherwise do B."</div>
+
+<div class="card">
+<h2><span class="num">1</span> Mount the second bumper</h2>
+<p>Your current bump switch is centered on the front. For this activity you want <b>one bumper on each front corner</b>, angled slightly outward, so each one only trips when <i>that side</i> hits something.</p>
+
+<svg viewBox="0 0 380 260" style="width:100%;max-width:480px;background:var(--code);border:1px solid var(--border);border-radius:8px">
+  <!-- chassis -->
+  <rect x="90" y="60" width="150" height="140" rx="10" fill="#2a3038" stroke="#4c97ff" stroke-width="2"/>
+  <text x="165" y="135" fill="#9aa4af" font-size="12" text-anchor="middle">VEX IQ</text>
+  <text x="165" y="150" fill="#9aa4af" font-size="12" text-anchor="middle">Brain</text>
+  <!-- drive wheels: one on each side -->
+  <circle cx="70" cy="130" r="22" fill="#9aa4af"/>
+  <circle cx="260" cy="130" r="22" fill="#9aa4af"/>
+  <text x="70" y="176" fill="#9aa4af" font-size="10" text-anchor="middle">drive wheel</text>
+  <text x="260" y="176" fill="#9aa4af" font-size="10" text-anchor="middle">drive wheel</text>
+  <!-- caster wheel: single, at the back -->
+  <circle cx="165" cy="218" r="12" fill="#60a5fa"/>
+  <text x="165" y="244" fill="#60a5fa" font-size="11" text-anchor="middle">caster wheel (back)</text>
+  <!-- existing bumper: front-left corner -->
+  <rect x="94" y="42" width="30" height="14" rx="3" fill="#f2c230" transform="rotate(-20 109 49)"/>
+  <text x="60" y="30" fill="#f2c230" font-size="12" text-anchor="middle">Bumper A</text>
+  <text x="60" y="44" fill="#f2c230" font-size="11" text-anchor="middle">(already have — Port 4)</text>
+  <line x1="80" y1="48" x2="105" y2="52" stroke="#f2c230" stroke-width="2"/>
+  <!-- new bumper: front-right corner -->
+  <rect x="205" y="42" width="30" height="14" rx="3" fill="var(--green)" transform="rotate(20 220 49)"/>
+  <text x="270" y="30" fill="var(--green)" font-size="12" text-anchor="middle">Bumper B — NEW</text>
+  <text x="270" y="44" fill="var(--green)" font-size="11" text-anchor="middle">(plug into any open port)</text>
+  <line x1="250" y1="48" x2="225" y2="52" stroke="var(--green)" stroke-width="2"/>
+  <text x="165" y="22" fill="#9aa4af" font-size="12" text-anchor="middle">FRONT</text>
+</svg>
+<p style="margin-top:10px"><i>Top-down view. If your existing bumper is actually on the right, just swap the labels — the important part is one on each corner, angled outward.</i></p>
+
+<label><input type="checkbox"> Bumper A (your current one) is mounted on one front corner, angled outward. Its port is: ______</label>
+<label><input type="checkbox"> Bumper B (new) is mounted on the <b>other</b> front corner, angled outward. Its port is: ______ (open ports 6–12 are free on your Brain)</label>
+<label><input type="checkbox"> Neither bumper sticks out past the other — press each by hand to make sure it clicks on its own.</label>
+<div class="note warn"><b>Careful:</b> if the two bumpers overlap or point straight forward, a head-on hit will trigger both at once — which is actually fine and expected (see the Challenge at the end), but a corner hit should only trigger <b>one</b> of them.</div>
+</div>
+
+<div class="card">
+<h2><span class="num">2</span> Predict</h2>
+<p>The robot drives forward. Something hits <b>Bumper A</b> (left side). What should the robot do next: turn toward the left, or away from it, toward the right? Why?</p>
+<p>______________________________________________</p>
+</div>
+
+<div class="card">
+<h2><span class="num">3</span> Build the program</h2>
+<p>Build it in two parts. The new <code>if / else</code> block is outlined in green.</p>
+
+<p><b>Part A: Drive until either bumper is pressed</b> (like last time, but now checking two sensors)</p>
+<div class="prog">
+<div class="b ev">when started</div>
+<div class="b dr">set drive velocity to <i>50</i> %</div>
+<div class="c new"><div class="h">forever</div><div class="in">
+<div class="b dr">drive <i>forward</i></div>
+<div class="b se">wait until <span style="background:#fff;border-radius:10px;padding:0 8px">Bumper A pressed? <b>or</b> Bumper B pressed?</span></div>
+</div></div>
+</div>
+
+<p><b>Part B: Decide which way to turn</b></p>
+<div class="prog">
+<div class="b ev">when started</div>
+<div class="b dr">set drive velocity to <i>50</i> %</div>
+<div class="c"><div class="h">forever</div><div class="in">
+<div class="b dr">drive <i>forward</i></div>
+<div class="b se">wait until <span style="background:#fff;border-radius:10px;padding:0 8px">Bumper A pressed? <b>or</b> Bumper B pressed?</span></div>
+<div class="b dr">stop driving</div>
+<div class="b dr">drive <i>reverse</i> for <i>150</i> <i>mm</i></div>
+<div class="ie new"><div class="h">if <span style="background:#fff;color:#111;border-radius:10px;padding:0 8px">Bumper A pressed?</span></div>
+<div class="in"><div class="b dr">turn <i>right</i> for <i>90</i> <i>degrees</i></div></div>
+<div class="eh">else</div>
+<div class="in"><div class="b dr">turn <i>left</i> for <i>90</i> <i>degrees</i></div></div>
+</div>
+</div></div>
+</div>
+<div class="note"><b>Read it like a sentence:</b> "If Bumper A was the one pressed, turn right. Otherwise (it must have been Bumper B), turn left." The robot always turns <i>away</i> from whichever side got hit.</div>
+</div>
+
+<div class="card">
+<h2><span class="num">4</span> Test it and fix it</h2>
+<table>
+<tr><th>Test</th><th>What should happen</th><th>What happened?</th></tr>
+<tr><td>Hit Bumper A on purpose</td><td>Backs up, turns right</td><td></td></tr>
+<tr><td>Hit Bumper B on purpose</td><td>Backs up, turns left</td><td></td></tr>
+<tr><td>Drive straight into a wall, dead center</td><td>Both bumpers may fire — robot still backs up and turns one way (see Challenge)</td><td></td></tr>
+</table>
+<p><b>Problem / try this:</b></p>
+<table>
+<tr><th>Problem</th><th>Try this</th></tr>
+<tr><td>Robot always turns the same way, no matter which bumper is hit</td><td>Double-check each bumper's port matches the port used in the <code>if</code> and <code>wait until</code> blocks.</td></tr>
+<tr><td>Nothing happens when bumped</td><td>Press each bumper by hand while the program runs and watch the Brain screen for a change, to confirm it's wired correctly.</td></tr>
+<tr><td>Robot spins the wrong way</td><td>Swap "turn right" and "turn left" inside the if/else — you may have Bumper A and B backwards from the diagram.</td></tr>
+</table>
+</div>
+
+<div class="card lvl">
+<h2><span class="num">5</span> Challenge: The head-on hit</h2>
+<p>If the robot drives straight into a wall dead center, <b>both</b> bumpers might press at almost the same moment. Right now, your <code>if / else</code> only checks Bumper A — so a double-hit still just turns right, as if only A were pressed.</p>
+<p><b>Try it:</b> Add a check <i>before</i> the if/else: "if both Bumper A and Bumper B are pressed, turn all the way around (180 degrees) instead of just 90." This is a good use of a third branch — ask your teacher about <code>elif</code> ("else if") if you want to try stacking more than two choices.</p>
+</div>
+
+<div class="card">
+<h2>✅ Show your teacher</h2>
+<label><input type="checkbox"> Two bumpers are mounted, one on each front corner.</label>
+<label><input type="checkbox"> Hitting Bumper A makes the robot turn right; hitting Bumper B makes it turn left.</label>
+<label><input type="checkbox"> I can explain, in my own words, what "if / else" means.</label>
+<p><b>Exit question:</b> Why does turning <i>away</i> from the side that got hit make more sense than always turning the same direction?<br>______________________________________________</p>
+</div>
+</div>
+</body>
+</html>
